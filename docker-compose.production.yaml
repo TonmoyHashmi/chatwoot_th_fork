@@ -2,7 +2,10 @@ version: '3'
 
 services:
   rails:
-    <<: *base
+    image: chatwoot/chatwoot:latest
+    env_file: .env
+    volumes:
+      - storage_data:/app/storage
     depends_on:
       - postgres
       - redis
@@ -17,7 +20,10 @@ services:
     restart: always
 
   sidekiq:
-    <<: *base
+    image: chatwoot/chatwoot:latest
+    env_file: .env
+    volumes:
+      - storage_data:/app/storage
     depends_on:
       - postgres
       - redis
@@ -38,7 +44,6 @@ services:
     environment:
       - POSTGRES_DB=chatwoot
       - POSTGRES_USER=postgres
-      # Please provide your own password.
       - POSTGRES_PASSWORD=chatwoot_pg_2026
 
   redis:
